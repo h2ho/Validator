@@ -1,0 +1,5 @@
+rules:
+  - com.hjho.validator.service
+
+server:
+  port: 8082
