@@ -37,8 +37,8 @@ public class ValidateControllerTests {
 	    	.andExpect(status().isOk());	  
 	    
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "aatre123"))
-    	.andDo(print())
-    	.andExpect(status().isOk());	   
+    		.andDo(print())
+    		.andExpect(status().isOk());	   
 	    
 	}
 	
@@ -59,8 +59,8 @@ public class ValidateControllerTests {
 	    	.andExpect(status().isOk());	  
 	    
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "abcd5462tg"))
-    	.andDo(print())
-    	.andExpect(status().isOk());	  
+    		.andDo(print())
+    		.andExpect(status().isOk());	  
 	    
 	}
 	
@@ -72,8 +72,8 @@ public class ValidateControllerTests {
 	    	.andExpect(status().isOk());	  
 	    
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "abc\nwe5we"))
-    	.andDo(print())
-    	.andExpect(status().isOk());	  
+    		.andDo(print())
+    		.andExpect(status().isOk());	  
 	    
 	    
 	}

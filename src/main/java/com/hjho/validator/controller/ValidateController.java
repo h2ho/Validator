@@ -38,7 +38,7 @@ public class ValidateController {
 			log.warn("Validate Request from {}, missing required field", request.getRemoteAddr());
 			return ResponseEntity.badRequest().build();
 		}
-		
+		validateService.validate(paramMap.get("password").get(0));
 		return ResponseEntity.ok(new ApiResult<>());
 	}
 }
