@@ -1,9 +1,7 @@
 package com.hjho.validator.constant;
 
 public enum Status{
-	TIME_OUT(-1, "Connection timeout or broken pipe"),
 	SUCCESS(0, "OK"),
-	NOT_FOUND(404, "DATA NOT FOUND"),
 	FAIL(500, "REQUEST FAIL"),
 	UNKNOWN_ERROR(9999, "unknown error");
 	
