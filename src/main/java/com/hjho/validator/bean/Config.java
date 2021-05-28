@@ -1,18 +1,28 @@
 package com.hjho.validator.bean;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Config {
 
-	@Bean (name = "rules")
-    @ConfigurationProperties ( prefix = "rules" )
-    public List<String> rules(){
-        return new ArrayList<String>();
+	@Bean
+	@Qualifier("CollectionRules")
+    public LengthRule getLengthRule() {
+        return new LengthRule(5,12);
     }
+
+    @Bean
+    @Qualifier("CollectionRules")
+    public NonRepeatingRule getNonRepeatingRule() {
+        return new NonRepeatingRule();
+    }
+
+    @Bean
+    @Qualifier("CollectionRules")
+    public AlphanumericRule getAlphanumericRule() {
+        return new AlphanumericRule();
+    }
+	
 }

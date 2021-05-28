@@ -7,6 +7,13 @@ public class ApiResult<T> {
 	private T data;
 	private int status;
 	
+	public ApiResult() {}
+	
+	public ApiResult(int status, T data) {
+		this.status = status;
+		this.data = data;
+	}
+	
 	public void setData(T data) {
 		this.data = data;
 	}

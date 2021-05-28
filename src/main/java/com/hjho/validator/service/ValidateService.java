@@ -1,6 +1,8 @@
 package com.hjho.validator.service;
 
+import java.util.Map;
+
 public interface ValidateService {
 	
-	public boolean validate(String password);
+	public Map<String, Boolean> validate(String password);
 }

@@ -1,10 +1,17 @@
 package com.hjho.validator.service;
 
-import org.junit.Assert;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.Map;
+
+import org.hamcrest.collection.IsMapContaining;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class ValidateServiceTests {
 
@@ -13,8 +20,10 @@ public class ValidateServiceTests {
 	
 	@Test
 	public void validateTest() {
-		
-		Assert.assertTrue(validateService.validate("1234QADC"));
+		Map<String, Boolean> result = validateService.validate("abc");
+		assertThat(result, IsMapContaining.hasEntry("com.hjho.validator.bean.LengthRule", Boolean.FALSE));
+		assertThat(result, IsMapContaining.hasEntry("com.hjho.validator.bean.NonRepeatingRule", Boolean.TRUE));
+		assertThat(result, IsMapContaining.hasEntry("com.hjho.validator.bean.AlphanumericRule", Boolean.FALSE));
 		
 	}
 }

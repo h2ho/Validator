@@ -2,6 +2,7 @@ package com.hjho.validator.constant;
 
 public enum Status{
 	SUCCESS(0, "OK"),
+	INVALID(4444, "Invalid"),
 	FAIL(500, "REQUEST FAIL"),
 	UNKNOWN_ERROR(9999, "unknown error");
 	

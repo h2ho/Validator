@@ -1,5 +1,7 @@
 package com.hjho.validator.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hjho.validator.constant.Status;
 import com.hjho.validator.model.ApiResult;
 import com.hjho.validator.service.ValidateService;
 
@@ -38,7 +41,14 @@ public class ValidateController {
 			log.warn("Validate Request from {}, missing required field", request.getRemoteAddr());
 			return ResponseEntity.badRequest().build();
 		}
-		validateService.validate(paramMap.get("password").get(0));
-		return ResponseEntity.ok(new ApiResult<>());
+		Map<String, Boolean> result = validateService.validate(paramMap.get("password").get(0));
+		
+		for(Boolean r : result.values()) {
+			if(!r.booleanValue()) {
+				return ResponseEntity.ok(ApiResult.fromStatus(Status.INVALID));
+			}
+		}		
+		
+		return ResponseEntity.ok(new ApiResult<String>(200, result.toString()));
 	}
 }
