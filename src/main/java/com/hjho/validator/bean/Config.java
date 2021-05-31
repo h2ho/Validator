@@ -1,16 +1,17 @@
 package com.hjho.validator.bean;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Config {
-
+	
 	@Bean
 	@Qualifier("CollectionRules")
-    public LengthRule getLengthRule() {
-        return new LengthRule(5,12);
+    public LengthRule getLengthRule(@Value("${length.min}") int min, @Value("${length.max}") int max) {
+        return new LengthRule(min,max);
     }
 
     @Bean

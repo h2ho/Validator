@@ -45,10 +45,11 @@ public class ValidateController {
 		
 		for(Boolean r : result.values()) {
 			if(!r.booleanValue()) {
+				log.warn("Password is not valid");
 				return ResponseEntity.ok(ApiResult.fromStatus(Status.INVALID));
 			}
 		}		
-		
-		return ResponseEntity.ok(new ApiResult<String>(200, result.toString()));
+		log.info("Password is valid");
+		return ResponseEntity.ok(ApiResult.fromStatus(Status.SUCCESS));
 	}
 }

@@ -9,7 +9,4 @@ public class CollectionRules {
 	@Autowired(required = false)
     private List<IRule> rules;
 
-    public void printBeanList() {
-        System.out.println(rules);
-    }
 }

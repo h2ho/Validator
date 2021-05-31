@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.hjho.validator.util.ValidationUtil;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class NonRepeatingRuleTest {
+public class NonRepeatingRuleTests {
 
 	@Autowired
 	NonRepeatingRule nonRepeatingRule;
@@ -19,10 +17,12 @@ public class NonRepeatingRuleTest {
 	@Test
 	public void nonRepeatingRuleTest() {
 		
-		Assert.assertTrue(ValidationUtil.checkRepeat("fastast"));		
-		Assert.assertFalse(ValidationUtil.checkRepeat(null));
-		Assert.assertTrue(ValidationUtil.checkRepeat(""));
-		Assert.assertTrue(ValidationUtil.checkRepeat("aa"));
+		Assert.assertFalse(nonRepeatingRule.isValid("fastast"));	
+		Assert.assertFalse(nonRepeatingRule.isValid("abcdabcd"));
+		Assert.assertFalse(nonRepeatingRule.isValid(null));
+		Assert.assertTrue(nonRepeatingRule.isValid(""));
+		Assert.assertFalse(nonRepeatingRule.isValid("aa"));
+		Assert.assertTrue(nonRepeatingRule.isValid("abcdefg"));
 		
 	}
 }

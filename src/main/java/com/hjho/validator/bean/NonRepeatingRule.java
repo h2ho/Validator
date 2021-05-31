@@ -25,7 +25,6 @@ public class NonRepeatingRule  implements IRule {
 	
 	boolean isRepeat(String input, String pattern, int startIndex) {
 		
-		System.out.println(pattern);
 		input = input.substring(startIndex + pattern.length());
 	    int currIndex = input.indexOf(pattern);
 	    if(currIndex == 0)

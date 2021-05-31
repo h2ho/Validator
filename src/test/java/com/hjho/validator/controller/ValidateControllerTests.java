@@ -2,6 +2,8 @@ package com.hjho.validator.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -13,6 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.hjho.validator.constant.Status;
+
+
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -20,7 +25,7 @@ public class ValidateControllerTests {
 
 	@Autowired
 	private MockMvc mockMvc;
-	
+		
 	String VERSION = "/api/v1";
 	
 	//String Based
@@ -33,12 +38,19 @@ public class ValidateControllerTests {
 	public void validateStringTest() throws Exception {		
 		
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "abcdQ234"))
-	    	.andDo(print())
-	    	.andExpect(status().isOk());	  
+	    	.andExpect(status().isOk())
+	    	.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	    	.andExpect(jsonPath("$.status").value(Status.INVALID.getCode()));;	  
+	    
+	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", ""))
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    	.andExpect(jsonPath("$.status").value(Status.INVALID.getCode()));
 	    
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "aatre123"))
-    		.andDo(print())
-    		.andExpect(status().isOk());	   
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    	.andExpect(jsonPath("$.status").value(Status.INVALID.getCode()));
 	    
 	}
 	
@@ -46,8 +58,9 @@ public class ValidateControllerTests {
 	public void validateStringCaseTest() throws Exception {		
 		
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "ABCAAA"))
-	    	.andDo(print())
-	    	.andExpect(status().isOk());	    
+	    	.andExpect(status().isOk())
+	    	.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	    	.andExpect(jsonPath("$.status").value(Status.INVALID.getCode()));
 	    
 	}
 	
@@ -55,12 +68,16 @@ public class ValidateControllerTests {
 	public void validateStringLengthTest() throws Exception {		
 		
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "abc"))
-	    	.andDo(print())
-	    	.andExpect(status().isOk());	  
+	    	.andExpect(status().isOk())
+	    	.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	    	.andExpect(jsonPath("$.status").value(Status.INVALID.getCode()));
+	    		  
 	    
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "abcd5462tg"))
     		.andDo(print())
-    		.andExpect(status().isOk());	  
+    		.andExpect(status().isOk())
+    		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	    	.andExpect(jsonPath("$.status").value(Status.SUCCESS.getCode()));
 	    
 	}
 	
@@ -68,12 +85,14 @@ public class ValidateControllerTests {
 	public void validateStringDelimiterTest() throws Exception {		
 		
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "abc f434"))
-	    	.andDo(print())
-	    	.andExpect(status().isOk());	  
+	    	.andExpect(status().isOk())
+	    	.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	    	.andExpect(jsonPath("$.status").value(Status.INVALID.getCode()));	  
 	    
 	    mockMvc.perform(post(VERSION + "/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("password", "abc\nwe5we"))
-    		.andDo(print())
-    		.andExpect(status().isOk());	  
+    		.andExpect(status().isOk())
+    		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	    	.andExpect(jsonPath("$.status").value(Status.INVALID.getCode()));;	  
 	    
 	    
 	}
@@ -86,9 +105,5 @@ public class ValidateControllerTests {
 	    	.andExpect(status().isBadRequest());    	    
 	    
 	}
-	
-	
-	
-	
 
 }
